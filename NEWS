@@ -1,0 +1,43 @@
+09 July 2007
+
+Version 0.0.11.  Bug fixes and support for FLAC 1.1.4.
+Tested on Mac OS 10.4.9 (Macports 1.442), FreeBSD 6.2, Ubuntu 7.0.4
+
+08 May 2005
+
+Version 0.0.9.  SIGINT (control-C) plays next song; two in succession exits.
+improved --help message.
+
+18 Feb 2005
+
+Version 0.0.8.  fixed 8 bit support.  tested with FLAC 1.1.2 on 
+Mac OS 10.3.8 (Fink 0.23.3), FreeBSD 5.3, Redhat 9.0, Fedora Core 3
+
+04 Mar 2004
+
+Version 0.0.7.  opportunistic ao_close to reduce inter-track gap.
+
+29 Feb 2004
+
+Version 0.0.6.  compiles on Yellowdog Linux 3.0.1 and Mac OS 10.3.2 with Fink.
+
+18 Jan 2004
+
+Version 0.0.5 available.  compiles on FreeBSD.
+
+01 Jan 2004
+
+Version 0.0.4 available.  now supports wav file output.
+
+23 Nov 2003
+
+Version 0.0.3 available.  works with irmp3!
+
+16 Nov 2003
+
+Version 0.0.2 available.  alpha version of remote mode complete.
+
+26 Oct 2003
+
+flac123 is back from the dead!  Version 0.0.1 available.  Compiles on
+Redhat 9.0 against libao-0.8.3 and FLAC 1.1.0.
