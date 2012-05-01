@@ -1,0 +1,10 @@
+To build flac123, you need the following libraries:
+
+	libao available at http://www.xiph.org/ao/
+	FLAC available at http://flac.sourceforge.net/
+
+All you need to do is:
+
+	# ./configure
+	# make
+	# make install

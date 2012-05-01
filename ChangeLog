@@ -1,0 +1,43 @@
+flac123-0.0.11
+	* FLAC 1.1.4 support
+	* use LDADD instead of LDFLAGS in Makefile.am
+	* obey ~/.libao default_driver="" setting
+	* fixed buffer overflow in vorbis comment parsing
+
+flac123-0.0.10
+	* not released
+
+flac123-0.0.9
+	* SIGINT plays next song; two in succession exits program
+
+flac123-0.0.8
+	* fixed 8 bit wav support
+	* added 8 bit libao support on macintosh
+	* include filename in stdout during playback
+	* updated copyright
+
+flac123-0.0.7
+	* opportunistic ao_close to reduce inter-track gap
+
+flac123-0.0.6
+	* compiles on Yellowdog Linux 3.0.1 and Mac OS 10.3.2 with Fink.
+
+flac123-0.0.5
+	* compiles on FreeBSD 4.9
+
+flac123-0.0.4
+	* added --wav output
+	* updated copyright
+
+flac123-0.0.3
+	* remote mode stdout now unbuffered
+
+flac123-0.0.2
+	* alpha version of remote mode complete
+	* print vorbis tags to stdout just like mpg321 does	
+	* updated Makefile.am and configure.ac for modern automake/autoconf
+	
+flac123-0.0.1
+	* Jake Angerman is the new maintainer
+	* updated all library calls to FLAC 1.1.0 so that it would compile
+	* fixed compiler warnings on Redhat 9.0 gcc 3.2.2
