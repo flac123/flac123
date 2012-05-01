@@ -1,0 +1,5 @@
+* can't play 24 bit resolution samples
+* can't upsample to libao's native sample rate
+* 8bit playback stops prematurely on FreeBSD 5.3 emu10k1 when flac123 exits
+  despite remaining samples
+* no error on invalid cli options

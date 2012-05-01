@@ -1,0 +1,26 @@
+AC_INIT(flac123/flac123.c)
+
+AC_PROG_CC
+AC_LANG_C
+
+AC_HEADER_STDC
+
+AC_CHECK_LIB(FLAC, FLAC__file_decoder_new, [haveflac=yes])
+if test "$haveflac" = "yes"; then
+	FLAC_LIBS="-lFLAC -lm"
+	AC_SUBST(FLAC_LIBS)
+else
+	AC_MSG_ERROR(FLAC required!)
+fi
+
+AC_CHECK_LIB(popt, poptGetContext, [havepopt=yes])
+if test "$havepopt" = "yes"; then
+	POPT_LIBS="-lpopt"
+	AC_SUBST(POPT_LIBS)
+else
+	AC_MSG_ERROR(popt required!)
+fi
+
+AM_PATH_AO(,AC_MSG_ERROR(libao required!))
+
+AC_OUTPUT(Makefile)

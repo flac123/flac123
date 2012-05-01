@@ -1,0 +1,25 @@
+flac123 is a command-line program for playing flac-encoded files.
+
+To build flac123:
+
+	# ./configure
+	# make
+	# make install
+
+
+flac-tools
+
+flac-tools aims to be a complete set of tools for playing and
+manipulating audio files stored the the FLAC format.  flac123 is the
+only component of flac-tools at this time.
+
+The flac123 and flac-tools homepage is http://flac-tools.sourceforge.net
+
+
+FLAC
+
+FLAC is an open format for losslessly compressing audio data.  For
+more information on FLAC see http://flac.sourceforge.net
+
+flac123 and the flac-tools package are licensed under the GNU GPL.  See
+the file COPYING for details.

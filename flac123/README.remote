@@ -1,0 +1,69 @@
+flac123 implements mpg123's 'Remote Control' interface via option -R.
+This is useful if you're writing a frontend to flac123 which needs a 
+consistent, reliable interface to control playback.
+
+There are several differences between the README.remote specifications
+of mpg123, mpg321, and flac123:
+
+a. mpg123 specifies @P as the output of the PAUSE command, whereas mpg321
+specifies @S but uses @P.  flac123 uses @P.
+
+b. mpg123 and mpg321 use <frames> as the argument to JUMP.  flac123 uses
+seconds as the argument to JUMP.
+
+c. mpg321 does not specify two output modes for @I.  flac123 uses two
+output modes for @I.
+
+d. mpg123 and mpg321 output @S for MPEG3 stream information.  flac123
+does not output @S.
+
+
+COMMANDS: (All commands can be shortened to first character only)
+--------
+
+LOAD <file>
+
+Loads and starts playing <file>.
+
+JUMP [+-]<seconds>
+If '+' or '-' is specified, jumps <seconds> seconds forward, or backwards,
+respectively, in the the flac file.  If neither is specifies, jumps to
+absolute second <second> in the flac file.
+
+PAUSE
+Pauses the playback of the flac file; if already paused, restarts playback.
+
+QUIT
+Quits flac123.
+
+
+
+OUTPUT:
+------
+
+@R FLAC123
+flac123 tagline. Output at startup.
+
+@I ID3:<a><b><c><d><e><f>
+Prints out the metadata information after loading the flac file.
+a = title (30 chars)
+b = artist (30 chars)
+c = album (30 chars)
+d = year (4 chars)
+e = comment (30 chars)
+f = genre (30 chars)
+
+@I filename
+Prints out the filename of the flac file, minus the extension. Happens after
+a flac file has been loaded and there is no metadata available.
+
+@F <current-frame> <frames-remaining> <current-time> <time-remaining>
+Frame decoding status updates (once per frame).
+Current-frame and frames-remaining are integers; current-time and
+time-remaining floating point numbers with two decimal places.
+
+@P {0, 1, 2}
+Stop/pause status.
+0 - playing has stopped. When 'STOP' is entered, or the flac file is finished.
+1 - Playing is paused. Enter 'PAUSE' or 'P' to continue.
+2 - Playing has begun again.
