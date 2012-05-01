@@ -17,6 +17,9 @@ output modes for @I.
 d. mpg123 and mpg321 output @S for MPEG3 stream information.  flac123
 does not output @S.
 
+e. mpg123 use percentage for @V(OLUME) (range: 0-100) . flac123 uses 
+a fraction for @V(OLUME) (0.0-1.0).
+
 
 COMMANDS: (All commands can be shortened to first character only)
 --------
@@ -33,9 +36,11 @@ absolute second <second> in the flac file.
 PAUSE
 Pauses the playback of the flac file; if already paused, restarts playback.
 
+VOLUME
+Sets the decoder volume between 0.0 and 1.0, where 1.0 equals 100%.
+
 QUIT
 Quits flac123.
-
 
 
 OUTPUT:
@@ -67,3 +72,8 @@ Stop/pause status.
 0 - playing has stopped. When 'STOP' is entered, or the flac file is finished.
 1 - Playing is paused. Enter 'PAUSE' or 'P' to continue.
 2 - Playing has begun again.
+
+@V {0.00000 - 1.00000} 
+Report the volume multiplication factor (Note: It can even be bigger than 1.0).
+
+

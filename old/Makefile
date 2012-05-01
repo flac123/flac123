@@ -9,3 +9,6 @@ srctar:
 	(cd /tmp;tar -c -z --exclude .svn -f flac123-${VERSION}.tar.gz flac123-${VERSION})
 	mv /tmp/flac123-${VERSION}.tar.gz .
 	rm -rf /tmp/flac123-${VERSION} 
+
+clean:
+	rm *.tar.gz
