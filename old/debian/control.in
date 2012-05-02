@@ -1,0 +1,16 @@
+Source: flac123
+Section: sound
+Priority: extra
+Maintainer: Hans Oesterholt (Lives in the Netherlands) <debian@oesterholt.net>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.2
+Homepage: http://flac-tools.sourceforge.net
+#Vcs-Git: git://git.debian.org/collab-maint/flac123.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/flac123.git;a=summary
+
+Package: flac123
+Architecture: any
+Depends: %%DEPENDS%%
+Description: A command line flac audio player
+ flac123 is a command line flac audio player that works similar to mpg123 and 
+ also has a remote interface like mpg123.

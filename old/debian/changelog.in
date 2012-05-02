@@ -1,0 +1,5 @@
+flac123 (0.0.12.%%DISTRO%%) %%DISTRO%%; urgency=low
+
+  * Initial release 
+
+ -- Hans Oesterholt (Lives in the Netherlands) <debian@oesterholt.net>  Wed, 02 May 2012 09:24:23 +0200
