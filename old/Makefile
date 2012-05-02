@@ -1,8 +1,7 @@
 VERSION=$(shell ./get_version.sh)
 PACKAGE=flac123
 DEPENDS=libao4,libflac8
-DISTROS=lucid natty oneiric precise
-#DISTROS=lucid
+DISTROS=lucid natty oneiric precise quantal
 DVERSION=${VERSION}.${DISTRO}
 UDIR=ubuntu/${PACKAGE}-${DVERSION}
 DDIR=${UDIR}/debian
