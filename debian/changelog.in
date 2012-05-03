@@ -1,4 +1,4 @@
-flac123 (0.0.12.%%DISTRO%%) %%DISTRO%%; urgency=low
+flac123 (0.0.12.%%DISTRO%%.%%SUBVERSION%%) %%DISTRO%%; urgency=low
 
   * Initial release 
 
