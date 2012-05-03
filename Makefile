@@ -11,6 +11,17 @@ DDIR=${UDIR}/debian
 PPA=ppa:0k-hans-f8/flac123
 
 all:
+	@echo "make srctar - makes a source tar which needs automake/autoconf"
+	@echo "make sf - makes a source release for sourceforge.net that has been automaked/autoconfed"
+	@echo ""
+	@echo "make ppa - makes a PPA for launchpad for Ubuntu's distros:"
+	@echo ""
+	@echo "       ${DISTROS}"
+	@echo ""
+	@echo "make ppa_old - makes a PPA for launchpad for Ubuntu's distros:"
+	@echo ""
+	@echo "       ${DISTROS1}"
+	@echo ""
 
 sf: srctar
 	cp ${PACKAGE}-${VERSION}.tar.gz /tmp
