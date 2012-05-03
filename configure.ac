@@ -2,11 +2,12 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT(flac123, 0.0.12, kerneljake-at-users-dot-sourceforge-dot-net)
+AC_INIT(flac123, 0.0.12, hoesterholt-at-users-dot-sourceforge-dot-net)
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([flac123.c])
 ##AC_CONFIG_HEADER([config.h])
 AC_REVISION($Id$)
+AC_PREFIX_DEFAULT(/usr)
 
 # Checks for specific systems.
 system_name=`( uname -s ) 2>&1`

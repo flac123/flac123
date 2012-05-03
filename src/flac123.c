@@ -34,9 +34,10 @@ typedef struct {
     char *wavfile;
     int remote;
     int quiet;
+    int version;
 } cli_var_struct;
 
-cli_var_struct cli_args = { NULL, NULL, 0, 0 };
+cli_var_struct cli_args = { NULL, NULL, 0, 0, 0 };
 
 struct poptOption cli_options[] = {
     /* longName, shortName, argInfo, arg, val, descrip, argDescrip */
@@ -45,6 +46,7 @@ struct poptOption cli_options[] = {
     { "remote", 'R', POPT_ARG_NONE, (void *)&(cli_args.remote), 0, "set remote mode for programmatic control", NULL },
     { "buffer-size", 'b', POPT_ARG_STRING, (void *)&(cli_args.buffer_size), 0, "buffer size", NULL },
     { "quiet", 'q', POPT_ARG_NONE, (void *)&(cli_args.quiet), 0, "suppress text output", NULL },
+    { "version", 'v', POPT_ARG_NONE,(void *)&(cli_args.version),0,"version/copyright info",NULL},
     POPT_AUTOHELP
     { 0, 0, 0, 0, 0, NULL, NULL }
 };
@@ -80,6 +82,11 @@ int main(int argc, const char **argv)
     poptSetOtherOptionHelp(pc, "[OPTIONS] FILES...");
     while (poptGetNextOpt(pc) >= 0)
     {
+    }
+
+    if (cli_args.version) {
+	printf("flac123 version %s, maintainer Hans Oesterholt, (c) 2012 GPLv2\n",FLAC123_VERSION);
+        exit(0);
     }
 
     if (!(cli_args.quiet || cli_args.remote)) {
