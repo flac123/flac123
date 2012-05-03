@@ -14,4 +14,4 @@ EXTRA_DIST = README.remote BUGS reconf
 ##man_MANS = flac123.1
 
 dist-hook:
-	-for i in `find $(distdir) -name "CVS" -print`; do rm -r $$i; done
+	-for i in `find $(distdir) -name ".svn" -print`; do rm -r $$i; done

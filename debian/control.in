@@ -2,7 +2,7 @@ Source: flac123
 Section: sound
 Priority: extra
 Maintainer: Hans Oesterholt (Lives in the Netherlands) <debian@oesterholt.net>
-Build-Depends: debhelper (>= 7.0.0)
+Build-Depends: debhelper (>= 7.0.0), %%BUILDDEPENDS%%
 Standards-Version: 3.9.2
 Homepage: http://flac-tools.sourceforge.net
 #Vcs-Git: git://git.debian.org/collab-maint/flac123.git
