@@ -1,16 +1,17 @@
 VERSION=$(shell ./get_version.sh)
 MYDIST=$(shell cat /etc/lsb-release | grep CODENAME | sed -e 's/[^=]*[=]//')
-SUBVERSION=7
+SUBVERSION=9
 PACKAGE=flac123
 DEPENDS=libao4,libflac8,libpopt0
 DEPENDS1=libao2,libflac8,libpopt0
 BUILDDEPENDS=libao-dev,libflac-dev,libpopt-dev,automake,autoconf
 DISTROS=natty oneiric precise quantal
+#DISTROS=precise
 DISTROS1=maverick lucid
 DVERSION=${VERSION}.${DISTRO}.${SUBVERSION}
 UDIR=ubuntu/${PACKAGE}-${DVERSION}
 DDIR=${UDIR}/debian
-PPA=ppa:0k-hans-f8/flac123
+PPA=ppa:0k-hans-f8/ppa
 
 all:
 	@echo "make srctar - makes a source tar which needs automake/autoconf"
