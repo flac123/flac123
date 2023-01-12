@@ -24,6 +24,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "flac123.h"
 
 #define BUF_SIZE (PATH_MAX + 5)
