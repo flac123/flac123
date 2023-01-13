@@ -64,7 +64,7 @@ static int remote_parse_input(void)
 
     if (select (1, &fd, NULL, NULL, &tv))  /* return immediately */
     {
-	if (!(numread = read(0, remote_input_buf + alreadyread, (sizeof(input)-1)-alreadyread)) > 0)
+	if ((numread = read(0, remote_input_buf + alreadyread, (sizeof(input)-1)-alreadyread)) < 0)
 	{
 	    numread = 0; /* should never happen.  read() blocks */
 	}
