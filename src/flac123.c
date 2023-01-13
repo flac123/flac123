@@ -129,7 +129,7 @@ int main(int argc, const char **argv)
 	    fprintf(stderr, "signal handler setup failed.\n");
 
 	do {
-	    if (filename = poptGetArg(pc))
+	    if ((filename = poptGetArg(pc)))
 		play_file(filename);
 	} while (filename != NULL && !quit_now);
     }
@@ -183,7 +183,7 @@ static void print_file_info(const char *filename)
 	printf("\nPlaying FLAC stream from %s\n", 
 	       strncasecmp(filename, "http://", 7) != 0 && 
 	       strchr(filename, '/') ? strrchr(filename, '/')+1 : filename);
-	printf("%d bit, %d Hz, %d channels, %d total samples, "
+	printf("%d bit, %d Hz, %d channels, %lu total samples, "
 	       "%.2f total seconds\n", 
 	       file_info.sam_fmt.bits, file_info.ao_fmt.rate, 
 	       file_info.ao_fmt.channels, file_info.total_samples, 
@@ -471,7 +471,7 @@ FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *dec,
 	} 
     }
 
-    ao_play(p->ao_dev, aobuf, decoded_size);
+    ao_play(p->ao_dev, (char *)aobuf, decoded_size);
 
     p->current_sample += samples;
     elapsed = ((float) samples) / frame->header.sample_rate;
@@ -481,7 +481,7 @@ FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *dec,
 
     if (cli_args.remote)
     {
-      fprintf(stderr, "@F %u %u %.2f %.2f\n", 
+      fprintf(stderr, "@F %lu %lu %.2f %.2f\n",
 	       p->current_sample, 
 	       p->total_samples > 0 ? 
 	       p->total_samples - p->current_sample : p->current_sample,

@@ -31,7 +31,7 @@ static int local__vcentry_matches(const char *field_name, const FLAC__StreamMeta
 {
     const FLAC__byte *eq = memchr(entry->entry, '=', entry->length);
     const unsigned field_name_length = strlen(field_name);
-    return (0 != eq && (unsigned)(eq-entry->entry) == field_name_length && 0 == strncasecmp(field_name, entry->entry, field_name_length));
+    return (0 != eq && (unsigned)(eq - entry->entry) == field_name_length && 0 == strncasecmp(field_name, (char *)entry->entry, field_name_length));
 }
 
 /* parse a string entry and put it into dest which is of size len.
