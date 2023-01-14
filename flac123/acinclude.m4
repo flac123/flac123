@@ -6,7 +6,7 @@
 dnl AM_PATH_AO([ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]])
 dnl Test for libao, and define AO_CFLAGS and AO_LIBS
 dnl
-AC_DEFUN(AM_PATH_AO,
+AC_DEFUN([AM_PATH_AO],
 [dnl 
 dnl Get the cflags and libraries
 dnl
