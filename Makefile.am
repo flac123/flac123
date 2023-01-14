@@ -15,3 +15,9 @@ EXTRA_DIST = README.remote BUGS reconf
 
 dist-hook:
 	-for i in `find $(distdir) -name ".svn" -print`; do rm -r $$i; done
+
+clobber: distclean
+	rm -fr autom4te.cache *~
+
+spotless: clobber
+	rm -fr configure Makefile.in
