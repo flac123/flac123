@@ -20,6 +20,11 @@ case "$system_name" in
 	   CFLAGS="$CFLAGS -I/sw/include"
 	   LDFLAGS="$LDFLAGS -L/sw/lib"
 	   with_ao_prefix="/sw"
+	elif test -d /usr/local ; then
+           # brew needs /usr/local/include and /usr/local/lib
+           CFLAGS="$CFLAGS -I/usr/local/include"
+           LDFLAGS="$LDFLAGS -L/usr/local/lib"
+           with_ao_prefix="/usr/local"
 	elif test -d /opt/local ; then
 	   # Macports needs /opt/local/include and /opt/local/lib
 	   CFLAGS="$CFLAGS -I/opt/local/include"
