@@ -30,7 +30,7 @@ Loads and starts playing <file>.
 
 JUMP [+-]<seconds>
 If '+' or '-' is specified, jumps <seconds> seconds forward, or backwards,
-respectively, in the the flac file.  If neither is specifies, jumps to
+respectively, in the the flac file.  If neither is specified, jumps to
 absolute second <second> in the flac file.
 
 PAUSE
