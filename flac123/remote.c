@@ -32,17 +32,54 @@
 char remote_input_buf[BUF_SIZE];
 
 static void trim_whitespace(char *str)
+/* logic from stackoverflow 122616 */
 {
-    char *ptr = str;
-    register int pos = strlen(str)-1;
+    size_t len = 0;
+    char *frontp = str;
+    char *endp = NULL;
 
-    while(isspace(ptr[pos]))
-        ptr[pos--] = '\0';
-    
-    while(isspace(*ptr))
-        ptr++;
-    
-    strncpy(str, ptr, pos+1);
+    if (NULL == str || '\0' == *str)
+    {
+        return;
+    }
+
+    len = strlen(str);
+    endp = str + len;
+
+    /* Move the front and back pointers to address the first non-whitespace
+     * characters from each end.
+     */
+    while (isspace( (unsigned char) *frontp))
+    {
+        frontp++;
+    }
+    if (endp != frontp)
+    {
+        while( isspace((unsigned char) *(--endp)) && endp != frontp ) {}
+    }
+
+    if (frontp != str && endp == frontp)
+    {
+        *str = '\0'; /* it was all whitespace */
+    }
+    else if (str + len - 1 != endp)
+    {
+       *(endp + 1) = '\0'; /* there was trailing whitespace */
+    }
+
+    /* Shift the string so that it starts at str so that if it's dynamically
+     * allocated, we can still free it on the returned pointer.  Note the reuse
+     * of endp to mean the front of the string buffer now.
+     */
+    endp = str;
+    if (frontp != str)
+    {
+        while (*frontp)
+        {
+            *endp++ = *frontp++;
+        }
+        *endp = '\0';
+    }
 }
 
 /* returns 0 on success (keep decoding), or -1 on QUIT (stop decoding) */
