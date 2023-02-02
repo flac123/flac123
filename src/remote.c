@@ -27,9 +27,10 @@
 #include <ctype.h>
 #include "flac123.h"
 
+/* for filename plus command and a space */
 #define BUF_SIZE (PATH_MAX + 5)
 
-char remote_input_buf[BUF_SIZE];
+static char remote_input_buf[BUF_SIZE];
 
 static void trim_whitespace(char *str)
 /* logic from stackoverflow 122616 */
@@ -85,46 +86,47 @@ static void trim_whitespace(char *str)
 /* returns 0 on success (keep decoding), or -1 on QUIT (stop decoding) */
 static int remote_parse_input(void)
 {
-    char input[BUF_SIZE]; /* for filename as well as input and space */
-    char new_remote_input_buf[BUF_SIZE];
+    char input[BUF_SIZE]; /* full line of a command plus argument */
+    char tmp_remote_input_buf[BUF_SIZE];
     char *arg, *newline;
-    int numread;
-    int alreadyread;
+    int num_read = 0;
+    int already_read;
     int linelen;
 
     fd_set fd;
     struct timeval tv = { 0, 0 };
     FD_ZERO(&fd);
-    FD_SET(0,&fd);
+    FD_SET(0,&fd); /* stdin */
 
-    alreadyread = strlen (remote_input_buf);
+    already_read = strlen(remote_input_buf);
 
-    if (select (1, &fd, NULL, NULL, &tv))  /* return immediately */
+    if (select (1, &fd, NULL, NULL, &tv))  /* returns immediately */
     {
-	if ((numread = read(0, remote_input_buf + alreadyread, (sizeof(input)-1)-alreadyread)) < 0)
+	if ((num_read = read(0, remote_input_buf + already_read, (sizeof(input)-1)-already_read)) < 0)
 	{
-	    numread = 0; /* should never happen.  read() blocks */
+            num_read = 0; /* should never happen.  read() blocks */
+	} else if (0 == num_read && 0 == already_read) {
+            return 0; /* EOF */
 	}
     } else {
-	numread = 0;
+	num_read = 0;
     }
 
-    remote_input_buf[numread+alreadyread] = '\0';
-    
+    remote_input_buf[already_read + num_read] = '\0';
+
     if ((newline = strchr(remote_input_buf, '\n')))
     {
         *(newline) = '\0';
     }
 
-    linelen = strlen (remote_input_buf);
 
-    strcpy (input, remote_input_buf);
-    /* input[linelen] = '\0'; */
-    strcpy (new_remote_input_buf, remote_input_buf + linelen + 1);
-    /* don't copy the \0... */
-    strcpy (remote_input_buf, new_remote_input_buf);
+    linelen = strlen(remote_input_buf);
 
-    trim_whitespace(input); /* from left and right */
+    strcpy(input, remote_input_buf);
+    strcpy(tmp_remote_input_buf, remote_input_buf + linelen + 1); /* +1 skips \0 */
+    strcpy(remote_input_buf, tmp_remote_input_buf);
+
+    trim_whitespace(input);
 
     if (strlen(input) == 0)
         return 0;
