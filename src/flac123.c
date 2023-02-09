@@ -53,17 +53,10 @@ struct poptOption cli_options[] = {
 
 static void play_file(const char *);
 static void play_remote_file(void);
-#ifdef LEGACY_FLAC
-void flac_error_hdl(const FLAC__FileDecoder *, FLAC__StreamDecoderErrorStatus, void *);
-void flac_metadata_hdl(const FLAC__FileDecoder *, const FLAC__StreamMetadata *, void *);
-FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__FileDecoder *,
-	const FLAC__Frame *, const FLAC__int32 * const buf[], void *);
-#else
 void flac_error_hdl(const FLAC__StreamDecoder *, FLAC__StreamDecoderErrorStatus, void *);
 void flac_metadata_hdl(const FLAC__StreamDecoder *, const FLAC__StreamMetadata *, void *);
 FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *,
 	const FLAC__Frame *, const FLAC__int32 * const buf[], void *);
-#endif
 
 static void signal_handler(int);
 static int quit_now = 0;
@@ -215,28 +208,6 @@ FLAC__bool decoder_constructor(const char *filename)
     file_info.year[VORBIS_YEAR_LEN] = '\0';
 
     /* create and initialize flac decoder object */
-#ifdef LEGACY_FLAC
-    file_info.decoder = FLAC__file_decoder_new();
-    FLAC__file_decoder_set_md5_checking(file_info.decoder, true);
-    FLAC__file_decoder_set_filename(file_info.decoder, filename);
-
-    FLAC__file_decoder_set_write_callback(file_info.decoder, 
-					  flac_write_hdl);
-    FLAC__file_decoder_set_metadata_callback(file_info.decoder, 
-					     flac_metadata_hdl);
-    FLAC__file_decoder_set_error_callback(file_info.decoder, 
-					  flac_error_hdl);
-    FLAC__file_decoder_set_client_data(file_info.decoder, 
-				       (void *)&file_info);
-
-    /* read metadata */
-    if ((FLAC__file_decoder_init(file_info.decoder) != FLAC__FILE_DECODER_OK)
-	|| (!FLAC__file_decoder_process_until_end_of_metadata(file_info.decoder)))
-    {
-	FLAC__file_decoder_delete(file_info.decoder);
-	return false;
-    }
-#else
     file_info.decoder = FLAC__stream_decoder_new();
     FLAC__stream_decoder_set_md5_checking(file_info.decoder, true);
 
@@ -247,18 +218,13 @@ FLAC__bool decoder_constructor(const char *filename)
 	FLAC__stream_decoder_delete(file_info.decoder);
 	return false;
     }
-#endif
 
     /* open libao output device */
     if (cli_args.wavfile) {
 	if (!(file_info.ao_dev = ao_open_file(ao_driver_id("wav"), cli_args.wavfile, /*overwrite*/ 1, &(file_info.ao_fmt), NULL)))
 	{
 	    fprintf(stderr, "Error opening wav file %s\n", cli_args.wavfile);
-#ifdef LEGACY_FLAC
-	    FLAC__file_decoder_delete(file_info.decoder);
-#else
 	    FLAC__stream_decoder_delete(file_info.decoder);
-#endif
 	    return false;
 	}
     }
@@ -266,11 +232,7 @@ FLAC__bool decoder_constructor(const char *filename)
 	if (!(file_info.ao_dev = ao_open_live(ao_output_id, &(file_info.ao_fmt), *ao_options)))
 	{
 	    fprintf(stderr, "Error opening ao device %d\n", ao_output_id);
-#ifdef LEGACY_FLAC
-	    FLAC__file_decoder_delete(file_info.decoder);
-#else
 	    FLAC__stream_decoder_delete(file_info.decoder);
-#endif
 	    return false;
 	}
     }
@@ -283,11 +245,7 @@ FLAC__bool decoder_constructor(const char *filename)
 	if (!(file_info.ao_dev = ao_open_live(ao_output_id, &(file_info.ao_fmt), *ao_options)))
 	{
 	    fprintf(stderr, "Error opening ao device %d\n", ao_output_id);
-#ifdef LEGACY_FLAC
-	    FLAC__file_decoder_delete(file_info.decoder);
-#else
 	    FLAC__stream_decoder_delete(file_info.decoder);
-#endif
 	    return false;
 	}
     }
@@ -307,13 +265,8 @@ FLAC__bool decoder_constructor(const char *filename)
 
 void decoder_destructor(void)
 {
-#ifdef LEGACY_FLAC
-    FLAC__file_decoder_finish(file_info.decoder);
-    FLAC__file_decoder_delete(file_info.decoder);
-#else
     FLAC__stream_decoder_finish(file_info.decoder);
     FLAC__stream_decoder_delete(file_info.decoder);
-#endif
     file_info.is_loaded  = false;
     file_info.is_playing = false;
     file_info.filename[0] = '\0';
@@ -327,15 +280,9 @@ static void play_file(const char *filename)
 	return;
     }
 
-#ifdef LEGACY_FLAC
-    while (FLAC__file_decoder_process_single(file_info.decoder) == true &&
-	   FLAC__file_decoder_get_state(file_info.decoder) == 
-	   FLAC__FILE_DECODER_OK && !interrupted)
-#else
     while (FLAC__stream_decoder_process_single(file_info.decoder) == true &&
 	   FLAC__stream_decoder_get_state(file_info.decoder) <
 	   FLAC__STREAM_DECODER_END_OF_STREAM && !interrupted)
-#endif
     {
     }
     interrupted = 0; /* more accurate feedback if placed after loop */
@@ -353,22 +300,13 @@ static void play_remote_file(void)
     {
 	if (file_info.is_playing == true)
 	{
-#ifdef LEGACY_FLAC
-	    if (FLAC__file_decoder_get_state(file_info.decoder) ==
-		FLAC__FILE_DECODER_END_OF_FILE) 
-#else
 	    if (FLAC__stream_decoder_get_state(file_info.decoder) ==
 		FLAC__STREAM_DECODER_END_OF_STREAM) 
-#endif
 	    {
 		decoder_destructor();
 		fprintf(stderr, "@P 0\n");
 	    }
-#ifdef LEGACY_FLAC
-	    else if (!FLAC__file_decoder_process_single(file_info.decoder)) 
-#else
 	    else if (!FLAC__stream_decoder_process_single(file_info.decoder)) 
-#endif
 	    {
 		fprintf(stderr, "error decoding single frame!\n");
 	    }
@@ -384,24 +322,14 @@ static void play_remote_file(void)
     }
 }
 
-#ifdef LEGACY_FLAC
-void flac_error_hdl(const FLAC__FileDecoder *dec, 
-		    FLAC__StreamDecoderErrorStatus status, void *data)
-#else
 void flac_error_hdl(const FLAC__StreamDecoder *dec, 
 		    FLAC__StreamDecoderErrorStatus status, void *data)
-#endif
 {
     fprintf(stderr, "error handler called!\n");
 }
 
-#ifdef LEGACY_FLAC
-void flac_metadata_hdl(const FLAC__FileDecoder *dec, 
-		       const FLAC__StreamMetadata *meta, void *data)
-#else
 void flac_metadata_hdl(const FLAC__StreamDecoder *dec, 
 		       const FLAC__StreamMetadata *meta, void *data)
-#endif
 {
     file_info_struct *p = (file_info_struct *) data;
 
@@ -424,17 +352,10 @@ void flac_metadata_hdl(const FLAC__StreamDecoder *dec,
     }
 }
 
-#ifdef LEGACY_FLAC
-FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__FileDecoder *dec, 
-					      const FLAC__Frame *frame, 
-					      const FLAC__int32 * const buf[], 
-					      void *data)
-#else
 FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *dec, 
 					      const FLAC__Frame *frame, 
 					      const FLAC__int32 * const buf[], 
 					      void *data)
-#endif
 {
     int sample, channel, i;
     uint_32 samples = frame->header.blocksize;
