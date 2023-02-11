@@ -389,6 +389,16 @@ FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *dec,
 	    for(channel = 0; channel < frame->header.channels; channel++,i++) {
 		u16aobuf[i] = (uint_16)(buf[channel][sample] * scale);
 	    }
+        }
+    } else if (p->sam_fmt.bits == 24) {
+        for (sample = i = 0; sample < samples; sample++) {
+	    for(channel = 0; channel < frame->header.channels; channel++,i+=3) {
+                uint_32 scaled_sample = (uint_32)(buf[channel][sample] * scale);
+
+                u8aobuf[i]   = (uint_8)(scaled_sample >>  0) & 0xFF;
+                u8aobuf[i+1] = (uint_8)(scaled_sample >>  8) & 0xFF;
+                u8aobuf[i+2] = (uint_8)(scaled_sample >> 16) & 0xFF;
+	    }
 	} 
     }
 
