@@ -617,7 +617,7 @@ PACKAGE_BUGREPORT='https://github.com/flac123'
 PACKAGE_URL=''
 
 ac_unique_file="src/flac123.c"
-ac_default_prefix=/usr
+ac_default_prefix=/usr/local
 ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS

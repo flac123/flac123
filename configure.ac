@@ -6,7 +6,7 @@ AC_INIT([flac123], m4_translit(m4_esyscmd_s([grep FLAC123_VERSION src/version.h 
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src/flac123.c])
 AC_REVISION($Id$)
-AC_PREFIX_DEFAULT(/usr)
+AC_PREFIX_DEFAULT(/usr/local)
 
 # Checks for specific systems.
 system_name=`( uname -s ) 2>&1`
