@@ -616,7 +616,7 @@ PACKAGE_STRING='flac123 0.0.12'
 PACKAGE_BUGREPORT='https://github.com/flac123'
 PACKAGE_URL=''
 
-ac_unique_file="flac123.c"
+ac_unique_file="src/flac123.c"
 ac_default_prefix=/usr
 ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
@@ -3034,7 +3034,6 @@ END
 fi
 
 
-##AC_CONFIG_HEADERS([config.h])
 
 
 
@@ -4718,7 +4717,7 @@ fi
 
 # end of checks
 
-ac_config_files="$ac_config_files Makefile"
+ac_config_files="$ac_config_files Makefile src/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -5458,6 +5457,7 @@ do
   case $ac_config_target in
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
+    "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

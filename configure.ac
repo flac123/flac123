@@ -2,10 +2,9 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.71])
-AC_INIT([flac123], m4_translit(m4_esyscmd_s([grep FLAC123_VERSION version.h | awk '{print $3}']), `"'), [https://github.com/flac123])
+AC_INIT([flac123], m4_translit(m4_esyscmd_s([grep FLAC123_VERSION src/version.h | awk '{print $3}']), `"'), [https://github.com/flac123])
 AM_INIT_AUTOMAKE
-AC_CONFIG_SRCDIR([flac123.c])
-##AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_SRCDIR([src/flac123.c])
 AC_REVISION($Id$)
 AC_PREFIX_DEFAULT(/usr)
 
@@ -76,5 +75,5 @@ AC_C_CONST
 
 # end of checks
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT
