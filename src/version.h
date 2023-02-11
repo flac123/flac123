@@ -18,4 +18,4 @@
  */
 
 /* be sure to update AC_INIT in configure.ac as well */
-#define FLAC123_VERSION "0.0.12"
+#define FLAC123_VERSION "2.0.0"
