@@ -1,6 +1,6 @@
 /*
  *  flac123 a command-line flac player
- *  Copyright (C) 2003-2007  Jake Angerman
+ *  Copyright (C) 2003-2023  Jake Angerman
  *
  *  This remote.c module heavily based upon:
  *  mpg321 - a fully free clone of mpg123.  Copyright (C) 2001 Joe Drew

@@ -1,6 +1,6 @@
 /*
  *  flac123 a command-line flac player
- *  Copyright (C) 2003-2007  Jake Angerman
+ *  Copyright (C) 2003-2023  Jake Angerman
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

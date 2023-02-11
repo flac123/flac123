@@ -1,6 +1,6 @@
 /* 
  *  flac123 a command-line flac player
- *  Copyright (C) 2003-2007  Jake Angerman
+ *  Copyright (C) 2003-2023  Jake Angerman
  *
  *  This vorbiscomment.c module heavily based upon:
  *  plugin_common - Routines common to several xmms plugins
