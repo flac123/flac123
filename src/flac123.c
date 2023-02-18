@@ -358,18 +358,17 @@ FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *dec,
 					      void *data)
 {
     int sample, channel, i;
-    uint_32 samples = frame->header.blocksize;
+    uint_32 num_samples = frame->header.blocksize;
     file_info_struct *p = (file_info_struct *) data;
-    uint_32 decoded_size = frame->header.blocksize * frame->header.channels
-	* (p->ao_fmt.bits / 8);
-    static uint_8 aobuf[FLAC__MAX_BLOCK_SIZE * FLAC__MAX_CHANNELS *
-			sizeof(uint_32)]; /*oink!*/
-    uint_16 *u16aobuf = (uint_16 *) aobuf;
-    uint_8   *u8aobuf = (uint_8  *) aobuf;
+    uint_32 decoded_size = frame->header.blocksize * frame->header.channels * (p->ao_fmt.bits / 8);
     float elapsed, remaining_time;
+    static uint_8 aobuf[FLAC__MAX_BLOCK_SIZE * FLAC__MAX_CHANNELS * sizeof(sint_32)]; /*oink!*/
+    sint_16 *s16aobuf = (sint_16 *) aobuf;
+    sint_32 *s32aobuf = (sint_32 *) aobuf;
+    uint_8   *u8aobuf = (uint_8  *) aobuf;
 
     if (p->sam_fmt.bits == 8) {
-        for (sample = i = 0; sample < samples; sample++) {
+        for (sample = i = 0; sample < num_samples; sample++) {
 	    for(channel = 0; channel < frame->header.channels; channel++,i++) {
 		if (cli_args.wavfile) {
 		    /* 8 bit wav data is unsigned */
@@ -377,7 +376,7 @@ FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *dec,
 		} else {
 #ifdef DARWIN
 		    /* macosx libao expects 16 bit samples */
-		    u16aobuf[i] = (uint_16)(buf[channel][sample] << 8);
+		    s16aobuf[i] = (sint_16)(buf[channel][sample] << 8);
 #else
 		    u8aobuf[i] = buf[channel][sample];
 #endif
@@ -385,27 +384,27 @@ FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *dec,
 	    }
 	} 
     } else if (p->sam_fmt.bits == 16) {
-        for (sample = i = 0; sample < samples; sample++) {
+        for (sample = i = 0; sample < num_samples; sample++) {
 	    for(channel = 0; channel < frame->header.channels; channel++,i++) {
-		u16aobuf[i] = (uint_16)(buf[channel][sample] * scale);
+		s16aobuf[i] = (sint_16)(buf[channel][sample] * scale);
 	    }
         }
     } else if (p->sam_fmt.bits == 24) {
-        for (sample = i = 0; sample < samples; sample++) {
+        for (sample = i = 0; sample < num_samples; sample++) {
 	    for(channel = 0; channel < frame->header.channels; channel++,i+=3) {
-                uint_32 scaled_sample = (uint_32)(buf[channel][sample] * scale);
+                sint_32 scaled_sample = (sint_32)(buf[channel][sample] * scale);
 
-                u8aobuf[i]   = (uint_8)(scaled_sample >>  0) & 0xFF;
-                u8aobuf[i+1] = (uint_8)(scaled_sample >>  8) & 0xFF;
-                u8aobuf[i+2] = (uint_8)(scaled_sample >> 16) & 0xFF;
+                u8aobuf[i]   = (scaled_sample >>  0) & 0xFF;
+                u8aobuf[i+1] = (scaled_sample >>  8) & 0xFF;
+                u8aobuf[i+2] = (scaled_sample >> 16) & 0xFF;
 	    }
 	} 
     }
 
     ao_play(p->ao_dev, (char *)aobuf, decoded_size);
 
-    p->current_sample += samples;
-    elapsed = ((float) samples) / frame->header.sample_rate;
+    p->current_sample += num_samples;
+    elapsed = ((float) num_samples) / frame->header.sample_rate;
     p->elapsed_time += elapsed;
     if ((remaining_time = p->total_time - p->elapsed_time) < 0)
 	remaining_time = 0;
