@@ -3040,6 +3040,11 @@ fi
 # Checks for specific systems.
 system_name=`( uname -s ) 2>&1`
 case "$system_name" in
+     Linux)
+
+printf "%s\n" "#define AUDIO_DEFAULT \"pulse\"" >>confdefs.h
+
+	;;
      Darwin)
 
 printf "%s\n" "#define AUDIO_DEFAULT \"macosx\"" >>confdefs.h
@@ -3063,11 +3068,11 @@ printf "%s\n" "#define AUDIO_DEFAULT \"macosx\"" >>confdefs.h
 	   with_ao_prefix="/opt/local"
 	fi
 	;;
-     *)
-	# FreeBSD gcc needs /usr/local/
+     FreeBSD)
 
 printf "%s\n" "#define AUDIO_DEFAULT \"oss\"" >>confdefs.h
 
+	# FreeBSD gcc needs /usr/local/
 	CFLAGS="$CFLAGS -I/usr/local/include"
 	LDFLAGS="$LDFLAGS -L/usr/local/lib"
 	;;

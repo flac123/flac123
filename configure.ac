@@ -1,7 +1,7 @@
 # customized configure.ac
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.71])
+AC_PREREQ([2.69])
 AC_INIT([flac123], m4_translit(m4_esyscmd_s([grep FLAC123_VERSION src/version.h | awk '{print $3}']), `"'), [https://github.com/flac123])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src/flac123.c])
@@ -11,6 +11,9 @@ AC_PREFIX_DEFAULT(/usr/local)
 # Checks for specific systems.
 system_name=`( uname -s ) 2>&1`
 case "$system_name" in
+     Linux)
+	AC_DEFINE_UNQUOTED(AUDIO_DEFAULT, "pulse",[Define the default libao output device.])
+	;;
      Darwin)
 	AC_DEFINE_UNQUOTED(AUDIO_DEFAULT, "macosx",[Define the default libao output device.])
 	AC_DEFINE(DARWIN)
@@ -31,9 +34,9 @@ case "$system_name" in
 	   with_ao_prefix="/opt/local"
 	fi
 	;;
-     *)
-	# FreeBSD gcc needs /usr/local/
+     FreeBSD)
 	AC_DEFINE_UNQUOTED(AUDIO_DEFAULT, "oss",[Define the default libao output device.])
+	# FreeBSD gcc needs /usr/local/
 	CFLAGS="$CFLAGS -I/usr/local/include"
 	LDFLAGS="$LDFLAGS -L/usr/local/lib"
 	;;
