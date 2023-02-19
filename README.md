@@ -1,8 +1,8 @@
-#flac123
+# flac123
 
 flac123 is a command-line program for playing audio files encoded with [FLAC](https://xiph.org/flac/).  It uses [libao](https://xiph.org/ao/) and has been tested on Linux, FreeBSD, and macOS.
 
-##Build
+## Build
 
 You will need the following three libraries installed.  The naming convention depends on the OS:
 
