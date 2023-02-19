@@ -1,7 +1,3 @@
-Maintainer: 		Hans Oesterholt <hoesterholt at users dot sf dot net>
-Original Authors: 	Jake Angerman <kerneljake at users dot sf dot net>, 
-					Dan Johnson <dj51d at warbirdsurvivors dot org>
-
-flac123 was written by Jake Angerman <kerneljake at users dot sf dot net> and 
-Dan Johnson <dj51d at warbirdsurvivors dot org> (2001)
-flac123 is heavily based upon mpg321 by Joe Drew <drew at debian dot org>
+flac123 was written by Jake Angerman based on an idea by Dan Johnson.
+flac123 is heavily influenced by mpg321 written by Joe Drew.
+Maintainer: Hans Oesterholt

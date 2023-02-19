@@ -2,24 +2,6 @@ flac123 implements mpg123's 'Remote Control' interface via option -R.
 This is useful if you're writing a frontend to flac123 which needs a 
 consistent, reliable interface to control playback.
 
-There are several differences between the README.remote specifications
-of mpg123, mpg321, and flac123:
-
-a. mpg123 specifies @P as the output of the PAUSE command, whereas mpg321
-specifies @S but uses @P.  flac123 uses @P.
-
-b. mpg123 and mpg321 use <frames> as the argument to JUMP.  flac123 uses
-seconds as the argument to JUMP.
-
-c. mpg321 does not specify two output modes for @I.  flac123 uses two
-output modes for @I.
-
-d. mpg123 and mpg321 output @S for MPEG3 stream information.  flac123
-does not output @S.
-
-e. mpg123 use percentage for @V(OLUME) (range: 0-100) . flac123 uses 
-a fraction for @V(OLUME) (0.0-1.0).
-
 
 COMMANDS: (All commands can be shortened to first character only)
 --------
@@ -74,6 +56,26 @@ Stop/pause status.
 2 - Playing has begun again.
 
 @V {0.00000 - 1.00000} 
-Report the volume multiplication factor (Note: It can even be bigger than 1.0).
+Report the volume multiplication factor (Note: It can be bigger than 1.0).
 
 
+DIFFERENCES:
+-----------
+
+There are several differences between the README.remote specifications
+of mpg123, mpg321, and flac123:
+
+a. mpg123 specifies @P as the output of the PAUSE command, whereas mpg321
+specifies @S but uses @P.  flac123 uses @P.
+
+b. mpg123 and mpg321 use <frames> as the argument to JUMP.  flac123 uses
+seconds as the argument to JUMP.
+
+c. mpg321 does not specify two output modes for @I.  flac123 uses two
+output modes for @I.
+
+d. mpg123 and mpg321 output @S for MPEG3 stream information.  flac123
+does not output @S.
+
+e. mpg123 use percentage for @V(OLUME) (range: 0-100) . flac123 uses 
+a fraction for @V(OLUME) (0.0-1.0).
