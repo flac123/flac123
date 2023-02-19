@@ -44,7 +44,7 @@ esac
 
 # let the user override the default libao output device
 AC_ARG_WITH(default_audio,
-[  --with-default-audio=string   Specify default libao output plugin [[oss, esd, arts, macosx, etc.]] ])
+[  --with-default-audio=string   Specify default libao output plugin [[pulse, macosx, oss, etc.]] ])
 
 if test "x$with_default_audio" != "x" -a "x$with_default_audio" != "xyes"; then
    AC_DEFINE_UNQUOTED(AUDIO_DEFAULT, "$with_default_audio",[Define the default libao output device.])

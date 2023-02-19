@@ -41,7 +41,7 @@ cli_var_struct cli_args = { NULL, NULL, 0, 0, 0 };
 
 struct poptOption cli_options[] = {
     /* longName, shortName, argInfo, arg, val, descrip, argDescrip */
-    { "driver", 'd', POPT_ARG_STRING, (void *)&(cli_args.driver), 0, "set libao output driver (oss, esd, arts, macosx, etc).  Default is " AUDIO_DEFAULT, NULL },
+    { "driver", 'd', POPT_ARG_STRING, (void *)&(cli_args.driver), 0, "set libao output driver (pulse, macosx, oss, etc).  Default is " AUDIO_DEFAULT, NULL },
     { "wav", 'w', POPT_ARG_STRING, (void *)&(cli_args.wavfile), 0, "send output to wav file (use --wav=- and -q for stdout)", "FILENAME" },
     { "remote", 'R', POPT_ARG_NONE, (void *)&(cli_args.remote), 0, "set remote mode for programmatic control", NULL },
     { "buffer-size", 'b', POPT_ARG_STRING, (void *)&(cli_args.buffer_size), 0, "buffer size", NULL },
