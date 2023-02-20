@@ -370,17 +370,13 @@ FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *dec,
     if (p->sam_fmt.bits == 8) {
         for (sample = i = 0; sample < num_samples; sample++) {
 	    for(channel = 0; channel < frame->header.channels; channel++,i++) {
-		if (cli_args.wavfile) {
-		    /* 8 bit wav data is unsigned */
-		    u8aobuf[i] = (uint_8)(buf[channel][sample] + 0x80);
-		} else {
 #ifdef DARWIN
-		    /* macosx libao expects 16 bit samples */
-		    s16aobuf[i] = (sint_16)(buf[channel][sample] << 8);
+                /* macosx libao expects 16 bit samples */
+                s16aobuf[i] = (sint_16)(buf[channel][sample] << 8);
 #else
-		    u8aobuf[i] = buf[channel][sample];
+                /* 8 bit wav data is unsigned */
+                u8aobuf[i] = buf[channel][sample] + 0x80;
 #endif
-		}
 	    }
 	} 
     } else if (p->sam_fmt.bits == 16) {
