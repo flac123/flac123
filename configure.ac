@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.69])
 AC_INIT([flac123], m4_translit(m4_esyscmd_s([grep FLAC123_VERSION src/version.h | awk '{print $3}']), `"'), [https://github.com/flac123])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([src/flac123.c])
 AC_REVISION($Id$)
 AC_PREFIX_DEFAULT(/usr/local)

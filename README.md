@@ -6,9 +6,9 @@ flac123 is a command-line program for playing audio files encoded with [FLAC](ht
 
 You will need the following three libraries installed.  The naming convention depends on the OS:
 
-* macOS brew: `flac`, `libao`, `popt`
-* Debian variants: `libflac-dev`, `libao-dev`, `libpopt-dev`
-* Red Hat variants: `flac-devel`, `libao-devel`, `popt-devel`
+* macOS brew: `flac` `libao` `popt`
+* Debian variants: `libflac-dev` `libao-dev` `libpopt-dev`
+* Red Hat variants: `flac-devel` `libao-devel` `popt-devel`
 
 To build:
 
