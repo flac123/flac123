@@ -40,6 +40,12 @@ case "$system_name" in
 	CFLAGS="$CFLAGS -I/usr/local/include"
 	LDFLAGS="$LDFLAGS -L/usr/local/lib"
 	;;
+     CYGWIN*)
+	AC_DEFINE_UNQUOTED(AUDIO_DEFAULT, "wmm",[Define the default libao output device.])
+	;;
+     *)
+	AC_DEFINE_UNQUOTED(AUDIO_DEFAULT, "oss",[Define the default libao output device.])
+	;;
 esac
 
 # let the user override the default libao output device
