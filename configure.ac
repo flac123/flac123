@@ -22,6 +22,11 @@ case "$system_name" in
 	   CFLAGS="$CFLAGS -I/sw/include"
 	   LDFLAGS="$LDFLAGS -L/sw/lib"
 	   with_ao_prefix="/sw"
+	elif test -d /opt/homebrew ; then
+           # brew needs /opt/homebrew/include and /opt/homebrew/lib
+           CFLAGS="$CFLAGS -I/opt/homebrew/include"
+           LDFLAGS="$LDFLAGS -L/opt/homebrew/lib"
+           with_ao_prefix="/opt/homebrew"
 	elif test -d /usr/local ; then
            # brew needs /usr/local/include and /usr/local/lib
            CFLAGS="$CFLAGS -I/usr/local/include"
