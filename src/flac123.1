@@ -1,0 +1,35 @@
+.TH FLAC123 1
+.SH NAME
+flac123 \- command line player for FLAC audio files 
+.SH SYNOPSIS
+.B flac123
+[\fIOPTIONS\fR]
+.IR file ...
+.SH DESCRIPTION
+.B flac123
+is a command line player for FLAC audio files.
+.SH OPTIONS
+.TP
+.BR \-d ", " \-\-driver =\fISTRING\fR
+set libao output driver (pulse, macosx, oss, etc)
+.TP
+.BR \-w ", " \-\-wav =\fIFILENAME\fR
+send output to wav file (use --wav=- and -q for stdout)
+.TP
+.BR \-R ", " \-\-remote
+set remote mode for programmatic control
+.TP
+.BR \-b ", " \-\-buffer-size =\fISTRING\fR
+buffer size
+.TP
+.BR \-q ", " \-\-quiet
+suppress text output
+.TP
+.BR \-v ", " \-\-version
+version info
+.TP
+.BR \-? ", " \-\-help
+help message
+.TP
+.BR \-\-usage
+display brief usage message
