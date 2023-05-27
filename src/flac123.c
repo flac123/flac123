@@ -30,25 +30,25 @@ static int ao_output_id;
 
 typedef struct {
     char *driver;
-    char *buffer_size;
+    char *buffer_time;
     char *wavfile;
     int remote;
     int quiet;
     int version;
 } cli_var_struct;
 
-cli_var_struct cli_args = { NULL, NULL, 0, 0, 0 };
+cli_var_struct cli_args = { NULL, NULL, NULL, 0, 0, 0 };
 
 struct poptOption cli_options[] = {
     /* longName, shortName, argInfo, arg, val, descrip, argDescrip */
     { "driver", 'd', POPT_ARG_STRING, (void *)&(cli_args.driver), 0, "set libao output driver (pulse, macosx, oss, etc).  Default is " AUDIO_DEFAULT, NULL },
     { "wav", 'w', POPT_ARG_STRING, (void *)&(cli_args.wavfile), 0, "send output to wav file (use --wav=- and -q for stdout)", "FILENAME" },
     { "remote", 'R', POPT_ARG_NONE, (void *)&(cli_args.remote), 0, "set remote mode for programmatic control", NULL },
-    { "buffer-size", 'b', POPT_ARG_STRING, (void *)&(cli_args.buffer_size), 0, "buffer size", NULL },
+    { "buffer-time", 'b', POPT_ARG_STRING, (void *)&(cli_args.buffer_time), 0, "override default hardware buffer size (in milliseconds)", "INT" },
     { "quiet", 'q', POPT_ARG_NONE, (void *)&(cli_args.quiet), 0, "suppress text output", NULL },
-    { "version", 'v', POPT_ARG_NONE,(void *)&(cli_args.version),0,"version info",NULL},
+    { "version", 'v', POPT_ARG_NONE, (void *)&(cli_args.version), 0, "version info", NULL},
     POPT_AUTOHELP
-    { 0, 0, 0, 0, 0, NULL, NULL }
+    POPT_TABLEEND
 };
 
 static void play_file(const char *);
@@ -67,14 +67,21 @@ ao_option **ao_options = NULL;
 
 int main(int argc, const char **argv)
 {
-    int tmp;
     poptContext pc;
+    int rc;
     const char *filename;
+
+    setvbuf(stdout, NULL, _IONBF, 0);
 
     pc = poptGetContext("flac123", argc, argv, cli_options, 0);
     poptSetOtherOptionHelp(pc, "[OPTIONS] FILES...");
-    while (poptGetNextOpt(pc) >= 0)
+    while ((rc=poptGetNextOpt(pc)) >= 0)
     {
+    }
+
+    if (rc != -1) {
+	fprintf(stderr, "%s: %s\n", poptBadOption(pc, POPT_BADOPTION_NOALIAS), poptStrerror(rc));
+	exit(1);
     }
 
     if (cli_args.version) {
@@ -90,8 +97,9 @@ int main(int argc, const char **argv)
 
     ao_options = malloc(1024);
     *ao_options = NULL;
-    if (cli_args.buffer_size)
-      ao_append_option(ao_options, "buffer_size", cli_args.buffer_size);
+    if (cli_args.buffer_time) {
+	ao_append_option(ao_options, "buffer_time", cli_args.buffer_time);
+    }
 
     if (! cli_args.wavfile) {
       if (cli_args.driver) {
@@ -113,7 +121,6 @@ int main(int argc, const char **argv)
 
     if (cli_args.remote)
     {
-        setvbuf(stdout, NULL, _IONBF, 0);
 	play_remote_file();
     }
     else
@@ -294,7 +301,7 @@ static void play_remote_file(void)
 {
     int status = 0;
 
-    fprintf(stderr, "@R FLAC123\n");
+    printf("@R FLAC123\n");
 
     while (status == 0)
     {
@@ -304,7 +311,7 @@ static void play_remote_file(void)
 		FLAC__STREAM_DECODER_END_OF_STREAM) 
 	    {
 		decoder_destructor();
-		fprintf(stderr, "@P 0\n");
+		printf("@P 0\n");
 	    }
 	    else if (!FLAC__stream_decoder_process_single(file_info.decoder)) 
 	    {
@@ -358,6 +365,7 @@ FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *dec,
 					      void *data)
 {
     int sample, channel, i;
+    unsigned long remaining_samples;
     uint_32 num_samples = frame->header.blocksize;
     file_info_struct *p = (file_info_struct *) data;
     uint_32 decoded_size = frame->header.blocksize * frame->header.channels * (p->ao_fmt.bits / 8);
@@ -406,17 +414,13 @@ FLAC__StreamDecoderWriteStatus flac_write_hdl(const FLAC__StreamDecoder *dec,
     p->current_sample += num_samples;
     elapsed = ((float) num_samples) / frame->header.sample_rate;
     p->elapsed_time += elapsed;
-    if ((remaining_time = p->total_time - p->elapsed_time) < 0)
-	remaining_time = 0;
 
-    if (cli_args.remote)
-    {
-      fprintf(stderr, "@F %lu %lu %.2f %.2f\n",
-	       p->current_sample, 
-	       p->total_samples > 0 ? 
-	       p->total_samples - p->current_sample : p->current_sample,
-	       p->elapsed_time, 
-	       remaining_time);
+    if (cli_args.remote) {
+	remaining_samples = p->total_samples > 0 ? p->total_samples - p->current_sample : p->current_sample;
+    	if ((remaining_time = p->total_time - p->elapsed_time) < 0)
+	    remaining_time = 0;
+
+ 	printf("@F %lu %lu %.2f %.2f\n", p->current_sample, remaining_samples, p->elapsed_time, remaining_time);
     }
 
     return FLAC__STREAM_DECODER_WRITE_STATUS_CONTINUE;

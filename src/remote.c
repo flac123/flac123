@@ -215,7 +215,7 @@ static int remote_parse_input(void)
     {
 	if (file_info.is_loaded == true)
 	{
-	    fprintf(stderr, "@P 0\n");
+	    printf("@P 0\n");
 	    decoder_destructor();
 	}
     }
@@ -225,7 +225,7 @@ static int remote_parse_input(void)
         if (arg)
 	{
 	    scale = atof(arg);
-	    fprintf(stderr, "@V %f\n", scale);
+	    printf("@V %f\n", scale);
 	}
     }
 
@@ -236,12 +236,12 @@ static int remote_parse_input(void)
 	    if (file_info.is_playing == true)
 	    {
 		file_info.is_playing = false;
-		fprintf(stderr, "@P 1\n");
+		printf("@P 1\n");
 	    }
 	    else
 	    {
 		file_info.is_playing = true;
-		fprintf(stderr, "@P 2\n");
+		printf("@P 2\n");
 	    }
 	}
     }
