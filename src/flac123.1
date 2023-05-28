@@ -4,7 +4,7 @@ flac123 \- command line player for FLAC audio files
 .SH SYNOPSIS
 .B flac123
 [\fIOPTIONS\fR]
-.IR file ...
+.IR files ...
 .SH DESCRIPTION
 .B flac123
 is a command line player for FLAC audio files.
@@ -17,10 +17,10 @@ set libao output driver (pulse, macosx, oss, etc)
 send output to wav file (use --wav=- and -q for stdout)
 .TP
 .BR \-R ", " \-\-remote
-set remote mode for programmatic control
+set remote mode for programmatic control.  See README.remote for more information.
 .TP
-.BR \-b ", " \-\-buffer-size =\fISTRING\fR
-buffer size
+.BR \-b ", " \-\-buffer-time =\fIINT\fR
+override the default hardware buffer size (in milliseconds)
 .TP
 .BR \-q ", " \-\-quiet
 suppress text output
@@ -33,3 +33,7 @@ help message
 .TP
 .BR \-\-usage
 display brief usage message
+.SH AUTHOR
+flac123 was written by Jake Angerman.
+.SH REPORTING BUGS
+Report bugs to <https://github.com/flac123/flac123>
