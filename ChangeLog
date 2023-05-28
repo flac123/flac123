@@ -1,3 +1,19 @@
+flac123-2.1.0
+	* Remote mode stream destinations changed to stdout and stderr
+	* --buffer-time option replaces --buffer-size passed to libao driver
+
+flac123-2.0.0
+	* Code refresh and maintenance
+	* 24 bit depth support
+	* 8 bit depth fix with proper wav output on macOS
+	* pulse is Linux default
+	* remove LEGACY_FLAC #define
+	* update --help with modern driver names
+	* move codebase to github
+
+flac123-0.0.12
+	* Extended remote spec with V(OLUME) command
+
 flac123-0.0.11
 	* FLAC 1.1.4 support
 	* use LDADD instead of LDFLAGS in Makefile.am
