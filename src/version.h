@@ -17,5 +17,5 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* be sure to update AC_INIT in configure.ac as well */
-#define FLAC123_VERSION "2.0.0"
+/* referenced by AC_INIT in configure.ac */
+#define FLAC123_VERSION "2.1.0"
