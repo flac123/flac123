@@ -1,5 +1,7 @@
 bin_PROGRAMS = flac123
 
+dist_man_MANS = flac123.1
+
 flac123_SOURCES = \
 	flac123.h \
 	flac123.c \
