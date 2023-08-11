@@ -83,7 +83,7 @@ static void trim_whitespace(char *str)
     }
 }
 
-/* returns 0 on success (keep decoding), or -1 on QUIT (stop decoding) */
+/* returns 0 on success (keep decoding), or -1 on QUIT or EOF (stop decoding) */
 static int remote_parse_input(void)
 {
     char input[BUF_SIZE]; /* full line of a command plus argument */
@@ -106,7 +106,7 @@ static int remote_parse_input(void)
 	{
             num_read = 0; /* should never happen.  read() blocks */
 	} else if (0 == num_read && 0 == already_read) {
-            return 0; /* EOF */
+            return -1; /* EOF */
 	}
     } else {
 	num_read = 0;

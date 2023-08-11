@@ -18,6 +18,9 @@ absolute second <second> in the flac file.
 PAUSE
 Pauses the playback of the flac file; if already paused, restarts playback.
 
+STOP
+Stops the playback of the flac file.
+
 VOLUME
 Sets the decoder volume between 0.0 and 1.0, where 1.0 equals 100%.
 
