@@ -1,3 +1,6 @@
+flac123-2.1.1
+	* fix obscure remote mode bug evinced during testing
+
 flac123-2.1.0
 	* Remote mode stream destinations changed to stdout and stderr
 	* --buffer-time option replaces --buffer-size passed to libao driver
